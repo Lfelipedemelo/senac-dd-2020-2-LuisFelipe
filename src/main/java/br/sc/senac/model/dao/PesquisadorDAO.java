@@ -1,5 +1,5 @@
 package br.sc.senac.model.dao;
 
-public class UsuarioDAO {
+public class PesquisadorDAO {
 
 }

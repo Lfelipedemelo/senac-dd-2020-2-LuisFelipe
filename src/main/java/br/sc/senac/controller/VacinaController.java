@@ -1,5 +1,5 @@
 package br.sc.senac.controller;
 
-public class UsuarioController {
+public class VacinaController {
 
 }
