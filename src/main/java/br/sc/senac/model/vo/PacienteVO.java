@@ -6,11 +6,16 @@ public class PacienteVO extends PessoaVO {
 
 	private boolean voluntario;
 	
-	public PacienteVO(String nome, LocalDate dataNascimento, String sexo, int cpf, int reacao, boolean voluntario) {
-		super(nome, dataNascimento, sexo, cpf, reacao);
-		this.voluntario = voluntario;
+	
+	public PacienteVO() {
+		super();
 	}
 
+	public PacienteVO(int id, String nome, LocalDate dataNascimento, String sexo, int cpf, int reacao, boolean voluntario) {
+		super(id, nome, dataNascimento, sexo, cpf, reacao);
+		this.voluntario = voluntario;
+	}
+	
 	public boolean isVoluntario() {
 		return voluntario;
 	}

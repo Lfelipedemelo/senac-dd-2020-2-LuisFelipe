@@ -4,19 +4,33 @@ import java.time.LocalDate;
 
 public abstract class PessoaVO {
 
+	private int id;
 	private String nome;
 	private LocalDate dataNascimento;
 	private String sexo;
 	private int cpf;
 	private int reacao;
 	
-	public PessoaVO( String nome, LocalDate dataNascimento, String sexo, int cpf, int reacao) {
+	public PessoaVO(int id, String nome, LocalDate dataNascimento, String sexo, int cpf, int reacao) {
 		super();
+		this.id = id;
 		this.nome = nome;
 		this.dataNascimento = dataNascimento;
 		this.sexo = sexo;
 		this.cpf = cpf;
 		this.reacao = reacao;
+	}
+	
+	public PessoaVO() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getNome() {
