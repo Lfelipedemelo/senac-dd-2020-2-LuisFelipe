@@ -1,16 +1,14 @@
 package br.sc.senac.model.vo;
 
-import java.time.LocalDate;
-
 public class VacinaVO {
 
 	private int idVacina;
 	private String pais;
-	private String estagio; //TODO verificar se há algo parecido com o enum do mysql com o professor.
-	private LocalDate dtInicioPesquisa;
+	private int estagio;
+	private String dtInicioPesquisa;
 	private PesquisadorVO pesquisadorVO;
 	
-	public VacinaVO(int idVacina, String pais, String estagio, LocalDate dtInicioPesquisa,
+	public VacinaVO(int idVacina, String pais, int estagio, String dtInicioPesquisa,
 			PesquisadorVO pesquisadorVO) {
 		super();
 		this.idVacina = idVacina;
@@ -19,6 +17,11 @@ public class VacinaVO {
 		this.dtInicioPesquisa = dtInicioPesquisa;
 		this.pesquisadorVO = pesquisadorVO;
 	}
+	
+	public VacinaVO() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getIdVacina() {
 		return idVacina;
 	}
@@ -31,16 +34,16 @@ public class VacinaVO {
 	public void setPais(String pais) {
 		this.pais = pais;
 	}
-	public String getEstagio() {
+	public int getEstagio() {
 		return estagio;
 	}
-	public void setEstagio(String estagio) {
+	public void setEstagio(int estagio) {
 		this.estagio = estagio;
 	}
-	public LocalDate getDtInicioPesquisa() {
+	public String getDtInicioPesquisa() {
 		return dtInicioPesquisa;
 	}
-	public void setDtInicioPesquisa(LocalDate dtInicioPesquisa) {
+	public void setDtInicioPesquisa(String dtInicioPesquisa) {
 		this.dtInicioPesquisa = dtInicioPesquisa;
 	}
 	public PesquisadorVO getPesquisadorVO() {
@@ -49,7 +52,5 @@ public class VacinaVO {
 	public void setPesquisadorVO(PesquisadorVO pesquisadorVO) {
 		this.pesquisadorVO = pesquisadorVO;
 	}
-	
-	
 	
 }

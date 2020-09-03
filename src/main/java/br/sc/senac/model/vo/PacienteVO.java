@@ -11,7 +11,7 @@ public class PacienteVO extends PessoaVO {
 		super();
 	}
 
-	public PacienteVO(int id, String nome, LocalDate dataNascimento, String sexo, int cpf, int reacao, boolean voluntario) {
+	public PacienteVO(int id, String nome, String dataNascimento, String sexo, int cpf, int reacao, boolean voluntario) {
 		super(id, nome, dataNascimento, sexo, cpf, reacao);
 		this.voluntario = voluntario;
 	}
