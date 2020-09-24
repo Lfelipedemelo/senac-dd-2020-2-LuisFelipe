@@ -9,23 +9,37 @@ import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.SoftBevelBorder;
+
+import com.github.lgooddatepicker.components.DatePicker;
+import com.github.lgooddatepicker.components.DatePickerSettings;
+import com.github.lgooddatepicker.components.DateTimePicker;
+
 import javax.swing.JLabel;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import java.time.LocalDate;
+
 import javax.swing.JFormattedTextField;
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
+import javax.swing.UIManager;
 
 public class TelaCadastroVacina extends JFrame {
 	private JTextField txtPais;
+	private DatePicker dataInicio;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		try {
+			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -45,6 +59,19 @@ public class TelaCadastroVacina extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 500, 610);
 		getContentPane().setLayout(null);
+		
+		DatePickerSettings dateSettings = new DatePickerSettings();
+		dateSettings.setAllowKeyboardEditing(false);
+		dateSettings.setFormatForDatesCommonEra("dd/MM/yyyy");
+		dateSettings.setFontValidDate(new Font("Tahoma", Font.BOLD, 17));
+		
+		dataInicio = new DatePicker(dateSettings);
+		dataInicio.getComponentDateTextField().setFont(new Font("Tahoma", Font.PLAIN, 11));
+		dataInicio.setBounds(224, 278, 250, 36);
+		getContentPane().add(dataInicio);
+		JButton datePickerButton = dataInicio.getComponentToggleCalendarButton();
+		datePickerButton.setText("");
+		datePickerButton.setIcon(new ImageIcon(TelaCadastroVacina.class.getResource("/Imagens/calendario.png")));
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(0, 0, 214, 571);
@@ -84,6 +111,7 @@ public class TelaCadastroVacina extends JFrame {
 		getContentPane().add(lblNewLabel_2);
 		
 		JFormattedTextField ftxtFieldNomePesquisadorResponsavel = new JFormattedTextField();
+		ftxtFieldNomePesquisadorResponsavel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		ftxtFieldNomePesquisadorResponsavel.setBounds(224, 213, 250, 30);
 		getContentPane().add(ftxtFieldNomePesquisadorResponsavel);
 		
@@ -92,16 +120,13 @@ public class TelaCadastroVacina extends JFrame {
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		getContentPane().add(lblNewLabel_3);
 		
-		JFormattedTextField ftxtFieldDataInicio = new JFormattedTextField();
-		ftxtFieldDataInicio.setBounds(224, 278, 250, 30);
-		getContentPane().add(ftxtFieldDataInicio);
-		
 		JLabel lblNewLabel_4 = new JLabel("Pais");
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		lblNewLabel_4.setBounds(224, 319, 36, 14);
 		getContentPane().add(lblNewLabel_4);
 		
 		txtPais = new JTextField();
+		txtPais.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		txtPais.setBounds(224, 344, 250, 30);
 		getContentPane().add(txtPais);
 		txtPais.setColumns(10);
@@ -112,15 +137,18 @@ public class TelaCadastroVacina extends JFrame {
 		getContentPane().add(lblNewLabel_5);
 		
 		JRadioButton rbtnEstagioInicial = new JRadioButton("Inicial");
-		rbtnEstagioInicial.setBounds(220, 413, 58, 23);
+		rbtnEstagioInicial.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		rbtnEstagioInicial.setBounds(224, 413, 72, 23);
 		getContentPane().add(rbtnEstagioInicial);
 		
 		JRadioButton rbtnEstagioTestes = new JRadioButton("Testes");
-		rbtnEstagioTestes.setBounds(308, 413, 63, 23);
+		rbtnEstagioTestes.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		rbtnEstagioTestes.setBounds(298, 413, 77, 23);
 		getContentPane().add(rbtnEstagioTestes);
 		
 		JRadioButton rbtnEstagioAplicacao = new JRadioButton("Aplica\u00E7\u00E3o");
-		rbtnEstagioAplicacao.setBounds(398, 413, 76, 23);
+		rbtnEstagioAplicacao.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		rbtnEstagioAplicacao.setBounds(377, 413, 105, 23);
 		getContentPane().add(rbtnEstagioAplicacao);
 		
 		ButtonGroup rbtnGroupEstagio = new ButtonGroup();
