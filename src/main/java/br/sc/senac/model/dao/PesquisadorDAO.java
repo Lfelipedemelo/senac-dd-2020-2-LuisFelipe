@@ -1,9 +1,12 @@
 package br.sc.senac.model.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,11 +23,13 @@ public class PesquisadorDAO implements BaseDAO<PesquisadorVO>{
 		PreparedStatement stmt = Banco.getPreparedStatementWithGeneratedKeys(conn, sql);
 		try {
 			
+			java.sql.Date date = java.sql.Date.valueOf(pesquisador.getDataNascimento());
+		
 			stmt.setString(1,pesquisador.getNome());
-			stmt.setString(2,pesquisador.getDataNascimento());
+			stmt.setDate(2,date);
 			stmt.setString(3,pesquisador.getSexo());
-			stmt.setLong(4,pesquisador.getCpf());
-			stmt.setInt(5,pesquisador.getReacao());
+			stmt.setString(4,pesquisador.getCpf());
+			stmt.setInt(5, 1);
 			stmt.setString(6,pesquisador.getInstituicao());
 
 		} catch (Exception e) {
@@ -47,10 +52,13 @@ public class PesquisadorDAO implements BaseDAO<PesquisadorVO>{
 		
 		boolean alterou = false;
 		try {			
+			
+			java.sql.Date date = java.sql.Date.valueOf(pesquisador.getDataNascimento());
+			
 			stmt.setString(1,pesquisador.getNome());
-			stmt.setString(2,pesquisador.getDataNascimento());
+			stmt.setDate(2,date);
 			stmt.setString(3,pesquisador.getSexo());
-			stmt.setLong(4,pesquisador.getCpf());
+			stmt.setString(4,pesquisador.getCpf());
 			stmt.setInt(5,pesquisador.getReacao());
 			stmt.setString(6,pesquisador.getInstituicao());
 			
@@ -138,11 +146,13 @@ public class PesquisadorDAO implements BaseDAO<PesquisadorVO>{
 	@Override
 	public PesquisadorVO construirDoResultSet(ResultSet result) throws SQLException {
 		
+		LocalDate date = result.getDate("DATA_NASCIMENTO").toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		
 		PesquisadorVO pesquisador = new PesquisadorVO();
 		pesquisador.setId(result.getInt("IDPESQUISADOR"));
 		pesquisador.setNome(result.getString("NOME"));
-		pesquisador.setDataNascimento(result.getString("DATA_NASCIMENTO"));
-		pesquisador.setCpf(result.getLong("CPF"));
+		pesquisador.setDataNascimento(date);
+		pesquisador.setCpf(result.getString("CPF"));
 		pesquisador.setReacao(result.getInt("REACAO"));
 		pesquisador.setInstituicao(result.getString("INSTITUICAO"));
 

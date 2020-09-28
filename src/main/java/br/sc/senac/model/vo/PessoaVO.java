@@ -6,12 +6,12 @@ public abstract class PessoaVO {
 
 	private int id;
 	private String nome;
-	private String dataNascimento;
+	private LocalDate dataNascimento;
 	private String sexo;
-	private long cpf;
+	private String cpf;
 	private int reacao;
 	
-	public PessoaVO(int id, String nome, String dataNascimento, String sexo, int cpf, int reacao) {
+	public PessoaVO(int id, String nome, LocalDate dataNascimento, String sexo, String cpf, int reacao) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -41,11 +41,11 @@ public abstract class PessoaVO {
 		this.nome = nome;
 	}
 
-	public String getDataNascimento() {
+	public LocalDate getDataNascimento() {
 		return dataNascimento;
 	}
 
-	public void setDataNascimento(String dataNascimento) {
+	public void setDataNascimento(LocalDate dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
 
@@ -57,12 +57,12 @@ public abstract class PessoaVO {
 		this.sexo = sexo;
 	}
 
-	public long getCpf() {
+	public String getCpf() {
 		return cpf;
 	}
 
-	public void setCpf(long l) {
-		this.cpf = l;
+	public void setCpf(String cpf2) {
+		this.cpf = cpf2;
 	}
 
 	public int getReacao() {

@@ -67,7 +67,7 @@ public class TelaCadastroVacina extends JFrame {
 		
 		dataInicio = new DatePicker(dateSettings);
 		dataInicio.getComponentDateTextField().setFont(new Font("Tahoma", Font.PLAIN, 11));
-		dataInicio.setBounds(224, 278, 250, 36);
+		dataInicio.setBounds(224, 278, 250, 30);
 		getContentPane().add(dataInicio);
 		JButton datePickerButton = dataInicio.getComponentToggleCalendarButton();
 		datePickerButton.setText("");

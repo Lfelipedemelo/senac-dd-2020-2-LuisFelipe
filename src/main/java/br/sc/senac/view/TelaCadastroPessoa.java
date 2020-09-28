@@ -30,6 +30,15 @@ import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.text.MaskFormatter;
+
+import com.github.lgooddatepicker.components.DatePicker;
+import com.github.lgooddatepicker.components.DatePickerSettings;
+
+import br.sc.senac.controller.PacienteController;
+import br.sc.senac.controller.PesquisadorController;
+import br.sc.senac.model.vo.PacienteVO;
+import br.sc.senac.model.vo.PesquisadorVO;
+
 import javax.swing.UIManager;
 import javax.swing.JFormattedTextField;
 
@@ -41,6 +50,12 @@ public class TelaCadastroPessoa extends JFrame {
 	private JTextField txtInstituicao;
 	private JCheckBox chckbxPesquisador;
 	private JLabel lblInstituicao;
+	private String cpf;
+	private JFormattedTextField txtCpf;
+	private JRadioButton rdbtnVoluntarioNao;
+	private JRadioButton rdbtnVoluntarioSim;
+	private JLabel lblVoluntario;
+	private DatePicker dataInicio;
 	
 	/**
 	 * Launch the application.
@@ -107,12 +122,12 @@ public class TelaCadastroPessoa extends JFrame {
 		
 		JLabel lblSexo = new JLabel("Sexo");
 		lblSexo.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lblSexo.setBounds(224, 232, 46, 14);
+		lblSexo.setBounds(224, 367, 46, 14);
 		contentPane.add(lblSexo);
 		
 		JLabel lblCpf = new JLabel("CPF");
 		lblCpf.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lblCpf.setBounds(224, 285, 46, 14);
+		lblCpf.setBounds(224, 305, 46, 14);
 		contentPane.add(lblCpf);
 		
 		JPanel panel_1 = new JPanel();
@@ -140,15 +155,15 @@ public class TelaCadastroPessoa extends JFrame {
 		contentPane.add(txtSobrenome);
 		txtSobrenome.setColumns(10);
 		
-		JRadioButton rdbtnSexoMasculino = new JRadioButton("Masculino");
+		final JRadioButton rdbtnSexoMasculino = new JRadioButton("Masculino");
 		rdbtnSexoMasculino.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		rdbtnSexoMasculino.setSelected(true);
-		rdbtnSexoMasculino.setBounds(224, 253, 83, 23);
+		rdbtnSexoMasculino.setBounds(220, 388, 83, 23);
 		contentPane.add(rdbtnSexoMasculino);
 		
 		JRadioButton rdbtnSexoFeminino = new JRadioButton("Feminino");
 		rdbtnSexoFeminino.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		rdbtnSexoFeminino.setBounds(335, 253, 79, 23);
+		rdbtnSexoFeminino.setBounds(305, 388, 79, 23);
 		contentPane.add(rdbtnSexoFeminino);
 		
 		chckbxPesquisador = new JCheckBox("Pesquisador");
@@ -158,44 +173,63 @@ public class TelaCadastroPessoa extends JFrame {
 				if(chckbxPesquisador.isSelected()) {
 					txtInstituicao.setEnabled(true);
 					lblInstituicao.setEnabled(true);
+					rdbtnVoluntarioNao.setEnabled(false);
+					rdbtnVoluntarioSim.setEnabled(false);
+					lblVoluntario.setEnabled(false);
 				} else {
 					txtInstituicao.setEnabled(false);
 					lblInstituicao.setEnabled(false);
+					rdbtnVoluntarioNao.setEnabled(true);
+					rdbtnVoluntarioSim.setEnabled(true);
+					lblVoluntario.setEnabled(true);
 				}
 			}
 		});
 		chckbxPesquisador.setToolTipText("");
 		chckbxPesquisador.setHorizontalAlignment(SwingConstants.LEFT);
 		chckbxPesquisador.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		chckbxPesquisador.setBounds(220, 410, 121, 23);
+		chckbxPesquisador.setBounds(220, 414, 157, 23);
 		contentPane.add(chckbxPesquisador);
 		
-		lblInstituicao = new JLabel("Instituição");
+		lblInstituicao = new JLabel("Institui\u00E7\u00E3o");
 		lblInstituicao.setEnabled(false);
 		lblInstituicao.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lblInstituicao.setBounds(224, 440, 83, 30);
+		lblInstituicao.setBounds(224, 444, 97, 30);
 		contentPane.add(lblInstituicao);
 		
 		txtInstituicao = new JTextField();
 		txtInstituicao.setEnabled(false);
-		txtInstituicao.setBounds(224, 469, 250, 30);
+		txtInstituicao.setBounds(224, 473, 250, 30);
 		contentPane.add(txtInstituicao);
 		txtInstituicao.setColumns(10);
 		
-		JLabel lblVoluntario = new JLabel("Voluntário");
+		lblVoluntario = new JLabel("Voluntário");
 		lblVoluntario.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lblVoluntario.setBounds(224, 351, 101, 14);
+		lblVoluntario.setBounds(373, 305, 101, 14);
 		contentPane.add(lblVoluntario);
 		
-		JRadioButton rdbtnVoluntarioSim = new JRadioButton("Sim");
+		rdbtnVoluntarioSim = new JRadioButton("Sim");
 		rdbtnVoluntarioSim.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		rdbtnVoluntarioSim.setBounds(224, 374, 52, 23);
+		rdbtnVoluntarioSim.setBounds(361, 326, 52, 30);
 		contentPane.add(rdbtnVoluntarioSim);
 		
-		JRadioButton rdbtnVoluntarioNao = new JRadioButton("N\u00E3o");
+		rdbtnVoluntarioNao = new JRadioButton("Não");
 		rdbtnVoluntarioNao.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		rdbtnVoluntarioNao.setBounds(284, 374, 53, 23);
+		rdbtnVoluntarioNao.setBounds(415, 326, 53, 30);
 		contentPane.add(rdbtnVoluntarioNao);
+		
+		DatePickerSettings dateSettings = new DatePickerSettings();
+		dateSettings.setAllowKeyboardEditing(false);
+		dateSettings.setFormatForDatesCommonEra("dd/MM/yyyy");
+		dateSettings.setFontValidDate(new Font("Tahoma", Font.PLAIN, 17));
+		
+		dataInicio = new DatePicker(dateSettings);
+		dataInicio.setBounds(224, 258, 250, 30);
+		contentPane.add(dataInicio);
+		dataInicio.getComponentDateTextField().setFont(new Font("Tahoma", Font.PLAIN, 11));
+		JButton datePickerButton = dataInicio.getComponentToggleCalendarButton();
+		datePickerButton.setText("");
+		datePickerButton.setIcon(new ImageIcon(TelaCadastroVacina.class.getResource("/Imagens/calendario.png")));
 		
 		ButtonGroup rdbtnGroupSexo = new ButtonGroup();
 		rdbtnGroupSexo.add(rdbtnSexoMasculino);
@@ -206,17 +240,62 @@ public class TelaCadastroPessoa extends JFrame {
 		rdbtnGroupVoluntario.add(rdbtnVoluntarioNao);
 		
 		JButton btnNewButton = new JButton("Cadastrar");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(chckbxPesquisador.isSelected()) {
+					PesquisadorVO pesquisador = new PesquisadorVO();
+					pesquisador.setNome(txtNome.getText() + " " + txtSobrenome.getText());
+					if(rdbtnSexoMasculino.isSelected()) {
+						pesquisador.setSexo("Masculino");
+					} else {
+						pesquisador.setSexo("Feminino");
+					}
+					pesquisador.setDataNascimento(dataInicio.getDate());
+					pesquisador.setCpf(txtCpf.getText().replace(".", "").replace("-", ""));
+					pesquisador.setInstituicao(txtInstituicao.getText());
+					try {
+						PesquisadorController pesquisadorController = new PesquisadorController();
+						pesquisadorController.CadastrarPesquisador(pesquisador);
+					} catch (Exception e) {
+						JOptionPane.showInternalMessageDialog(null, "MENSAGEM");
+					}
+					
+				} else {				
+					PacienteVO paciente = new PacienteVO();
+					paciente.setNome(txtNome.getText() + " " + txtSobrenome.getText());
+					if(rdbtnSexoMasculino.isSelected()) {
+						paciente.setSexo("Masculino");
+					} else {
+						paciente.setSexo("Feminino");
+					}
+					paciente.setDataNascimento(dataInicio.getDate());
+					paciente.setCpf(txtCpf.getText().replace(".", "").replace("-", ""));
+					if(rdbtnVoluntarioSim.isSelected()) {
+						paciente.setVoluntario(true);
+					} else {
+						paciente.setVoluntario(false);
+					}
+					PacienteController pacienteController = new PacienteController();
+					pacienteController.CadastrarPaciente(paciente);	
+				}
+			}
+		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnNewButton.setBounds(293, 518, 109, 36);
+		btnNewButton.setBounds(285, 514, 109, 36);
 		contentPane.add(btnNewButton);
 		
 		MaskFormatter mascaraCpf;
 		try {
 			mascaraCpf = new MaskFormatter("###.###.###-##");
-			JFormattedTextField txtCpf = new JFormattedTextField(mascaraCpf);
+			txtCpf = new JFormattedTextField(mascaraCpf);
 			txtCpf.setText("");
-			txtCpf.setBounds(224, 310, 92, 30);
+			txtCpf.setBounds(224, 326, 92, 30);
 			contentPane.add(txtCpf);
+			
+			JLabel lblNewLabel = new JLabel("Data de Nascimento");
+			lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 17));
+			lblNewLabel.setBounds(224, 233, 250, 14);
+			contentPane.add(lblNewLabel);
 		} catch (ParseException e) {
 			JOptionPane.showMessageDialog(null, "Erro ao inserir cpf\nErro: " + e.getMessage());
 		}

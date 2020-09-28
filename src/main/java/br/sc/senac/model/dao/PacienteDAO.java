@@ -21,7 +21,7 @@ public class PacienteDAO {
 			PreparedStatement query = Banco.getPreparedStatement(conn, sql);) {
 			query.setString(1, pacienteVO.getNome());
 			query.setString(2, pacienteVO.getSexo());
-			query.setLong(3, pacienteVO.getCpf());
+			query.setString(3, pacienteVO.getCpf());
 			query.setInt(4, pacienteVO.getReacao());
 			query.setBoolean(5, pacienteVO.isVoluntario());
 		} catch(SQLException e) {
@@ -42,7 +42,7 @@ public class PacienteDAO {
 			PreparedStatement query = Banco.getPreparedStatement(conn, sql);) {
 			query.setString(1, pacienteVO.getNome());
 			query.setString(2, pacienteVO.getSexo());
-			query.setLong(3, pacienteVO.getCpf());
+			query.setString(3, pacienteVO.getCpf());
 			query.setInt(4, pacienteVO.getReacao());
 			query.setBoolean(5, pacienteVO.isVoluntario());
 			query.setInt(6, pacienteVO.getId());
@@ -121,7 +121,7 @@ public class PacienteDAO {
 		PacienteVO pacienteBuscado = new PacienteVO();
 		pacienteBuscado.setId(conjuntoResultante.getInt("id"));
 		pacienteBuscado.setNome(conjuntoResultante.getString("nome"));
-		pacienteBuscado.setCpf(conjuntoResultante.getLong("cpf"));
+		pacienteBuscado.setCpf(conjuntoResultante.getString("cpf"));
 		pacienteBuscado.setReacao(conjuntoResultante.getInt("reacao"));
 		pacienteBuscado.setVoluntario(conjuntoResultante.getBoolean("voluntario"));
 		

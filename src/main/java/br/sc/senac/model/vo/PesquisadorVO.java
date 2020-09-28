@@ -6,7 +6,7 @@ public class PesquisadorVO extends PessoaVO {
 	
 	private String instituicao;
 
-	public PesquisadorVO(int id, String nome, String dataNascimento, String sexo, int cpf, int reacao, String instituicao) {
+	public PesquisadorVO(int id, String nome, LocalDate dataNascimento, String sexo, String cpf, int reacao, String instituicao) {
 		super(id, nome, dataNascimento, sexo, cpf, reacao);
 		this.instituicao = instituicao;
 	}
