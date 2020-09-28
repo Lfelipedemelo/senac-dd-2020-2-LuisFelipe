@@ -11,8 +11,12 @@ public class PesquisadorBO {
 	
 	public String CadastrarPesquisador(PesquisadorVO pesquisador) {
 		
-		pDao.inserir(pesquisador);
-
+		try {
+			pDao.inserir(pesquisador);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERRO:\n" + e.getMessage());
+		}
+		
 		return "Pesquisador cadastrado com sucesso!";	
 	}
 

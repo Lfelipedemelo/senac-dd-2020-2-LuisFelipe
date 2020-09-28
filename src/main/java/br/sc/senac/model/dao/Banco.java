@@ -13,8 +13,8 @@ public class Banco {
 	private static final String BANCODADOS = "";
 	private static final String URL_MYSQL = "jdbc:mysql://localhost:3306/DB_VACINACAO?useTimezone=true&serverTimezone=UTC";	
 	private static final String CONEXAO = URL_MYSQL + BANCODADOS;
-	private static final String USER = "Luis";
-	private static final String PASSWORD = "@Senac1234";
+	private static final String USER = "root";
+	private static final String PASSWORD = "root";
 	
 	public static final int CODIGO_RETORNO_SUCESSO = 1;
 	

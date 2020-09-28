@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,22 +16,17 @@ public class VacinaDAO implements BaseDAO<VacinaVO>{
 	@Override
 	public VacinaVO inserir(VacinaVO vacina) {
 		Connection conn = Banco.getConnection();
-		String sql = "INSERT INTO VACINA (IDPESQUISADOR, PAIS, ESTAGIO, DT_INICIO_PESQUISA)"
+		String sql = "INSERT INTO VACINA (PESQUISADOR, PAIS, ESTAGIO, DT_INICIO_PESQUISA)"
 				+ " VALUES (?,?,?,?)";
 		PreparedStatement stmt = Banco.getPreparedStatementWithGeneratedKeys(conn, sql);
 		try {
 			
-			stmt.setInt(1, vacina.getPesquisadorVO().getId());
+			java.sql.Date date = java.sql.Date.valueOf(vacina.getDtInicioPesquisa());
+			
+			stmt.setString(1, vacina.getPesquisador());
 			stmt.setString(2, vacina.getPais());
 			stmt.setInt(3, vacina.getEstagio());
-			stmt.setString(4, vacina.getDtInicioPesquisa());
-
-			/*int codigoRetorno = stmt.executeUpdate();
-			if(codigoRetorno == Banco.CODIGO_RETORNO_SUCESSO) {
-				ResultSet result = stmt.getGeneratedKeys();
-				int idGerado = result.getInt(1);
-				vacina.setIdVacina(idGerado);
-			}*/
+			stmt.setDate(4, date);
 			
 		} catch (Exception e) {
 			System.out.println("Erro ao inserir vacina\nErro: [" + e.getMessage() + "]");
@@ -44,16 +41,19 @@ public class VacinaDAO implements BaseDAO<VacinaVO>{
 	@Override
 	public boolean alterar(VacinaVO vacina) {
 		Connection conn = Banco.getConnection();
-		String sql = "UPDATE VACINA SET IDPESQUISADOR = ?"
+		String sql = "UPDATE VACINA SET PESQUISADOR = ?"
 				+ ", PAIS = ?, ESTAGIO = ?, DT_INICIO_PESQUISA = ?"
 				+ " WHERE IDVACINA = ?";
 		PreparedStatement stmt = Banco.getPreparedStatement(conn, sql);
 		
 		boolean alterou = false;
 		try {			
-			stmt.setInt(1, vacina.getPesquisadorVO().getId());
+			
+			java.sql.Date date = java.sql.Date.valueOf(vacina.getDtInicioPesquisa());
+			
+			stmt.setString(1, vacina.getPesquisador());
 			stmt.setString(2, vacina.getPais());
-			stmt.setString(3, vacina.getDtInicioPesquisa());
+			stmt.setDate(3, date);
 			stmt.setInt(5, vacina.getIdVacina());
 			
 			int codigoRetorno = stmt.executeUpdate();
@@ -139,10 +139,13 @@ public class VacinaDAO implements BaseDAO<VacinaVO>{
 
 	@Override
 	public VacinaVO construirDoResultSet(ResultSet result) throws SQLException {
+		
+		LocalDate date = result.getDate("DT_INICIO_PESQUISA").toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		
 		VacinaVO vacina = new VacinaVO();
 		vacina.setIdVacina(result.getInt("IDVACINA"));
 		vacina.setEstagio(result.getInt("ESTAGIO"));
-		vacina.setDtInicioPesquisa(result.getString("DT_INICIO_PESQUISA"));
+		vacina.setDtInicioPesquisa(date);
 		
 		return vacina;
 	}

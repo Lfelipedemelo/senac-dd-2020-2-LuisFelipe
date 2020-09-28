@@ -9,13 +9,21 @@ public class PesquisadorController {
 	
 	private PesquisadorBO pBO = new PesquisadorBO();
 	
-	public String CadastrarPesquisador(PesquisadorVO pesquisador) {
-		String mensagem = "";
-
-		pBO.CadastrarPesquisador(pesquisador);
-
-		mensagem = "Pesquisador Cadastrado com Sucesso";
-		return mensagem;
+	public String CadastrarPesquisador(PesquisadorVO pesquisador) {		
+		try {
+			
+			if(pesquisador.getCpf().length() != 11 || pesquisador.getCpf() == null || pesquisador.getCpf().isEmpty()) {
+				JOptionPane.showMessageDialog(null, "CPF INVALIDO");
+			}
+			if(pesquisador.getNome().isEmpty() || pesquisador.getNome().length() < 2) {
+				JOptionPane.showMessageDialog(null, "NOME INVALIDO");
+			}
+			pBO.CadastrarPesquisador(pesquisador);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERRO:\n" + e.getMessage());
+		}
+		
+		return "Pesquisador Cadastrado com Sucesso";
 		
 	}
 

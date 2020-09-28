@@ -1,21 +1,23 @@
 package br.sc.senac.model.vo;
 
+import java.time.LocalDate;
+
 public class VacinaVO {
 
 	private int idVacina;
 	private String pais;
 	private int estagio;
-	private String dtInicioPesquisa;
-	private PesquisadorVO pesquisadorVO;
+	private LocalDate dtInicioPesquisa;
+	private String pesquisador;
 	
-	public VacinaVO(int idVacina, String pais, int estagio, String dtInicioPesquisa,
-			PesquisadorVO pesquisadorVO) {
+	public VacinaVO(int idVacina, String pais, int estagio, LocalDate dtInicioPesquisa,
+			String pesquisador) {
 		super();
 		this.idVacina = idVacina;
 		this.pais = pais;
 		this.estagio = estagio;
 		this.dtInicioPesquisa = dtInicioPesquisa;
-		this.pesquisadorVO = pesquisadorVO;
+		this.pesquisador = pesquisador;
 	}
 	
 	public VacinaVO() {
@@ -40,17 +42,17 @@ public class VacinaVO {
 	public void setEstagio(int estagio) {
 		this.estagio = estagio;
 	}
-	public String getDtInicioPesquisa() {
+	public LocalDate getDtInicioPesquisa() {
 		return dtInicioPesquisa;
 	}
-	public void setDtInicioPesquisa(String dtInicioPesquisa) {
-		this.dtInicioPesquisa = dtInicioPesquisa;
+	public void setDtInicioPesquisa(LocalDate localDate) {
+		this.dtInicioPesquisa = localDate;
 	}
-	public PesquisadorVO getPesquisadorVO() {
-		return pesquisadorVO;
+	public String getPesquisador() {
+		return pesquisador;
 	}
-	public void setPesquisadorVO(PesquisadorVO pesquisadorVO) {
-		this.pesquisadorVO = pesquisadorVO;
+	public void setPesquisador(String pesquisador) {
+		this.pesquisador = pesquisador;
 	}
 	
 }

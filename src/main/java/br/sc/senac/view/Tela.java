@@ -21,8 +21,7 @@ public class Tela {
 		System.out.println("Digite PAIS, ESTAGIO, DT_INICIO_PESQUISA");
 		vacina.setPais(s.nextLine());
 		vacina.setEstagio(s.nextInt());
-		vacina.setDtInicioPesquisa("2020-02-01");
-		vacina.setPesquisadorVO(pesquisador);
+
 		vacinaDAO.inserir(vacina);
 		
 		

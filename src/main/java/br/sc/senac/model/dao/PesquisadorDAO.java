@@ -20,7 +20,7 @@ public class PesquisadorDAO implements BaseDAO<PesquisadorVO>{
 		Connection conn = Banco.getConnection();
 		String sql = "INSERT INTO PESQUISADOR (NOME, DATA_NASCIMENTO, SEXO, CPF, REACAO, INSTITUICAO)"
 				+ " VALUES (?,?,?,?,?,?)";
-		PreparedStatement stmt = Banco.getPreparedStatementWithGeneratedKeys(conn, sql);
+		PreparedStatement stmt = Banco.getPreparedStatement(conn, sql);
 		try {
 			
 			java.sql.Date date = java.sql.Date.valueOf(pesquisador.getDataNascimento());
@@ -41,7 +41,7 @@ public class PesquisadorDAO implements BaseDAO<PesquisadorVO>{
 		
 		return pesquisador;
 	}
-
+	
 	@Override
 	public boolean alterar(PesquisadorVO pesquisador) {
 		Connection conn = Banco.getConnection();

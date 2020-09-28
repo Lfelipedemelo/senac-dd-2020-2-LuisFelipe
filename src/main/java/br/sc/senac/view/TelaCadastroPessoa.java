@@ -255,7 +255,7 @@ public class TelaCadastroPessoa extends JFrame {
 					pesquisador.setInstituicao(txtInstituicao.getText());
 					try {
 						PesquisadorController pesquisadorController = new PesquisadorController();
-						pesquisadorController.CadastrarPesquisador(pesquisador);
+						JOptionPane.showMessageDialog(null, pesquisadorController.CadastrarPesquisador(pesquisador));
 					} catch (Exception e) {
 						JOptionPane.showInternalMessageDialog(null, "MENSAGEM");
 					}
@@ -276,7 +276,7 @@ public class TelaCadastroPessoa extends JFrame {
 						paciente.setVoluntario(false);
 					}
 					PacienteController pacienteController = new PacienteController();
-					pacienteController.CadastrarPaciente(paciente);	
+					JOptionPane.showMessageDialog(null, pacienteController.CadastrarPaciente(paciente));	
 				}
 			}
 		});
