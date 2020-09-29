@@ -20,7 +20,7 @@ public class PesquisadorDAO implements BaseDAO<PesquisadorVO>{
 		Connection conn = Banco.getConnection();
 		String sql = "INSERT INTO PESQUISADOR (NOME, DATA_NASCIMENTO, SEXO, CPF, REACAO, INSTITUICAO)"
 				+ " VALUES (?,?,?,?,?,?)";
-		PreparedStatement stmt = Banco.getPreparedStatement(conn, sql);
+		PreparedStatement stmt = Banco.getPreparedStatementWithGeneratedKeys(conn, sql);
 		try {
 			
 			java.sql.Date date = java.sql.Date.valueOf(pesquisador.getDataNascimento());
@@ -31,6 +31,15 @@ public class PesquisadorDAO implements BaseDAO<PesquisadorVO>{
 			stmt.setString(4,pesquisador.getCpf());
 			stmt.setInt(5, 1);
 			stmt.setString(6,pesquisador.getInstituicao());
+			
+			int codigoRetorno = stmt.executeUpdate();
+			if(codigoRetorno == Banco.CODIGO_RETORNO_SUCESSO) {			
+				ResultSet resultado = stmt.getGeneratedKeys();
+				if(resultado.next()) {
+					int chaveGerada = resultado.getInt(1);
+					pesquisador.setId(chaveGerada);					
+				}
+			}
 
 		} catch (Exception e) {
 			System.out.println("Erro ao inserir Pesquisador\nErro: [" + e.getMessage() + "]");

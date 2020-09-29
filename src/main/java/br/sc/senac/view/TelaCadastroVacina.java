@@ -32,6 +32,8 @@ import javax.swing.JRadioButton;
 import javax.swing.UIManager;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class TelaCadastroVacina extends JFrame {
 	private JTextField txtPais;
@@ -40,6 +42,11 @@ public class TelaCadastroVacina extends JFrame {
 	private JRadioButton rbtnEstagioInicial;
 	private JRadioButton rbtnEstagioTestes;
 	private JRadioButton rbtnEstagioAplicacao;
+	private int estagioSelecionado;
+	private ButtonGroup rbtnGroupEstagio;
+	private static final int ESTAGIO_INICIAL = 1;
+	private static final int ESTAGIO_TESTES = 2;
+	private static final int ESTAGIO_APLICACAO = 3;
 	
 	
 	/**
@@ -74,7 +81,7 @@ public class TelaCadastroVacina extends JFrame {
 		DatePickerSettings dateSettings = new DatePickerSettings();
 		dateSettings.setAllowKeyboardEditing(false);
 		dateSettings.setFormatForDatesCommonEra("dd/MM/yyyy");
-		dateSettings.setFontValidDate(new Font("Tahoma", Font.BOLD, 17));
+		dateSettings.setFontValidDate(new Font("Tahoma", Font.PLAIN, 17));
 		
 		dataInicio = new DatePicker(dateSettings);
 		dataInicio.getComponentDateTextField().setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -116,12 +123,12 @@ public class TelaCadastroVacina extends JFrame {
 		lblNewLabel.setBounds(10, 11, 173, 199);
 		panel_2.add(lblNewLabel);
 		
-		JLabel lblNewLabel_2 = new JLabel("Nome do pesquisador responsavel");
+		JLabel lblNewLabel_2 = new JLabel("Nome do pesquisador respons\u00E1vel");
 		lblNewLabel_2.setBounds(224, 181, 250, 21);
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		getContentPane().add(lblNewLabel_2);
 		
-		JLabel lblNewLabel_3 = new JLabel("Data de inicio");
+		JLabel lblNewLabel_3 = new JLabel("Data de in\u00EDcio");
 		lblNewLabel_3.setBounds(224, 253, 250, 14);
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		getContentPane().add(lblNewLabel_3);
@@ -132,35 +139,55 @@ public class TelaCadastroVacina extends JFrame {
 		getContentPane().add(lblNewLabel_4);
 		
 		txtPais = new JTextField();
-		txtPais.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		txtPais.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		txtPais.setBounds(224, 344, 250, 30);
 		getContentPane().add(txtPais);
 		txtPais.setColumns(10);
 		
-		JLabel lblNewLabel_5 = new JLabel("Estagio da pesquisa");
+		JLabel lblNewLabel_5 = new JLabel("Est\u00E1gio da pesquisa");
 		lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		lblNewLabel_5.setBounds(224, 385, 250, 21);
 		getContentPane().add(lblNewLabel_5);
 		
 		rbtnEstagioInicial = new JRadioButton("Inicial");
+		rbtnEstagioInicial.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				estagioSelecionado = ESTAGIO_INICIAL;
+			}
+		});
 		rbtnEstagioInicial.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		rbtnEstagioInicial.setBounds(224, 413, 72, 23);
 		getContentPane().add(rbtnEstagioInicial);
 		
 		rbtnEstagioTestes = new JRadioButton("Testes");
+		rbtnEstagioTestes.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				estagioSelecionado = ESTAGIO_TESTES;
+			}
+		});
 		rbtnEstagioTestes.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		rbtnEstagioTestes.setBounds(298, 413, 77, 23);
 		getContentPane().add(rbtnEstagioTestes);
 		
 		rbtnEstagioAplicacao = new JRadioButton("Aplica\u00E7\u00E3o");
+		rbtnEstagioAplicacao.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				estagioSelecionado = ESTAGIO_APLICACAO;
+			}
+		});
 		rbtnEstagioAplicacao.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		rbtnEstagioAplicacao.setBounds(377, 413, 105, 23);
 		getContentPane().add(rbtnEstagioAplicacao);
 		
-		ButtonGroup rbtnGroupEstagio = new ButtonGroup();
+		rbtnGroupEstagio = new ButtonGroup();
 		rbtnGroupEstagio.add(rbtnEstagioInicial);
 		rbtnGroupEstagio.add(rbtnEstagioTestes);
 		rbtnGroupEstagio.add(rbtnEstagioAplicacao);
+		
+		
 		
 		JButton btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.addActionListener(new ActionListener() {
@@ -168,26 +195,31 @@ public class TelaCadastroVacina extends JFrame {
 				VacinaVO vacina = new VacinaVO();
 				vacina.setPesquisador(txtNomePesquisador.getText());
 				vacina.setPais(txtPais.getText());
-				if(rbtnEstagioInicial.isSelected()) {
-					vacina.setEstagio(1);
-				} else if (rbtnEstagioTestes.isSelected()) {
-					vacina.setEstagio(2);
-				} else {
-					vacina.setEstagio(3);
-				}
+				vacina.setEstagio(estagioSelecionado);
 				vacina.setDtInicioPesquisa(dataInicio.getDate());
 				
 				VacinaController vacinaController = new VacinaController();
-				JOptionPane.showMessageDialog(null, vacinaController.CadastrarVacina(vacina));
+				JOptionPane.showMessageDialog(null, vacinaController.cadastrarVacina(vacina));
+				
+				limparTela();
+				
 			}
 		});
 		btnCadastrar.setBounds(299, 495, 109, 36);
 		getContentPane().add(btnCadastrar);
 		
 		txtNomePesquisador = new JTextField();
+		txtNomePesquisador.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		txtNomePesquisador.setBounds(224, 213, 250, 30);
 		getContentPane().add(txtNomePesquisador);
 		txtNomePesquisador.setColumns(10);
 		
+	}
+
+	protected void limparTela() {
+		txtNomePesquisador.setText("");
+		dataInicio.setDate(null);
+		txtPais.setText("");
+		rbtnGroupEstagio.clearSelection();
 	}
 }

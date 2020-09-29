@@ -27,7 +27,15 @@ public class VacinaDAO implements BaseDAO<VacinaVO>{
 			stmt.setString(2, vacina.getPais());
 			stmt.setInt(3, vacina.getEstagio());
 			stmt.setDate(4, date);
-			
+						
+			int codigoRetorno = stmt.executeUpdate();
+			if(codigoRetorno == Banco.CODIGO_RETORNO_SUCESSO) {			
+				ResultSet resultado = stmt.getGeneratedKeys();
+				if(resultado.next()) {
+					int chaveGerada = resultado.getInt(1);
+					vacina.setIdVacina(chaveGerada);					
+				}
+			}
 		} catch (Exception e) {
 			System.out.println("Erro ao inserir vacina\nErro: [" + e.getMessage() + "]");
 		} finally {

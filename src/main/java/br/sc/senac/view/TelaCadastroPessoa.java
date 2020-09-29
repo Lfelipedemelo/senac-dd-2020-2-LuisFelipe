@@ -41,6 +41,8 @@ import br.sc.senac.model.vo.PesquisadorVO;
 
 import javax.swing.UIManager;
 import javax.swing.JFormattedTextField;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class TelaCadastroPessoa extends JFrame {
 
@@ -56,6 +58,15 @@ public class TelaCadastroPessoa extends JFrame {
 	private JRadioButton rdbtnVoluntarioSim;
 	private JLabel lblVoluntario;
 	private DatePicker dataInicio;
+	private boolean eVoluntario;
+	private String sexoSelecionado;
+	private ButtonGroup rdbtnGroupSexo;
+	private ButtonGroup rdbtnGroupVoluntario;
+	
+	public static final boolean VOLUNTARIO_SIM = true;
+	public static final boolean VOLUNTARIO_NAO = false;
+	public static final String	SEXO_MASCULINO = "Masculino";
+	public static final String SEXO_FEMININO = "Feminino";
 	
 	/**
 	 * Launch the application.
@@ -156,12 +167,24 @@ public class TelaCadastroPessoa extends JFrame {
 		txtSobrenome.setColumns(10);
 		
 		final JRadioButton rdbtnSexoMasculino = new JRadioButton("Masculino");
+		rdbtnSexoMasculino.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				sexoSelecionado = SEXO_MASCULINO;
+			}
+		});
 		rdbtnSexoMasculino.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		rdbtnSexoMasculino.setSelected(true);
 		rdbtnSexoMasculino.setBounds(220, 388, 83, 23);
 		contentPane.add(rdbtnSexoMasculino);
 		
 		JRadioButton rdbtnSexoFeminino = new JRadioButton("Feminino");
+		rdbtnSexoFeminino.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				sexoSelecionado = SEXO_FEMININO;
+			}
+		});
 		rdbtnSexoFeminino.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		rdbtnSexoFeminino.setBounds(305, 388, 79, 23);
 		contentPane.add(rdbtnSexoFeminino);
@@ -209,11 +232,23 @@ public class TelaCadastroPessoa extends JFrame {
 		contentPane.add(lblVoluntario);
 		
 		rdbtnVoluntarioSim = new JRadioButton("Sim");
+		rdbtnVoluntarioSim.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				eVoluntario = VOLUNTARIO_SIM;
+			}
+		});
 		rdbtnVoluntarioSim.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		rdbtnVoluntarioSim.setBounds(361, 326, 52, 30);
 		contentPane.add(rdbtnVoluntarioSim);
 		
 		rdbtnVoluntarioNao = new JRadioButton("Não");
+		rdbtnVoluntarioNao.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				eVoluntario = VOLUNTARIO_NAO;
+			}
+		});
 		rdbtnVoluntarioNao.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		rdbtnVoluntarioNao.setBounds(415, 326, 53, 30);
 		contentPane.add(rdbtnVoluntarioNao);
@@ -231,11 +266,11 @@ public class TelaCadastroPessoa extends JFrame {
 		datePickerButton.setText("");
 		datePickerButton.setIcon(new ImageIcon(TelaCadastroVacina.class.getResource("/Imagens/calendario.png")));
 		
-		ButtonGroup rdbtnGroupSexo = new ButtonGroup();
+		rdbtnGroupSexo = new ButtonGroup();
 		rdbtnGroupSexo.add(rdbtnSexoMasculino);
 		rdbtnGroupSexo.add(rdbtnSexoFeminino);
 		
-		ButtonGroup rdbtnGroupVoluntario = new ButtonGroup();
+		rdbtnGroupVoluntario = new ButtonGroup();
 		rdbtnGroupVoluntario.add(rdbtnVoluntarioSim);
 		rdbtnGroupVoluntario.add(rdbtnVoluntarioNao);
 		
@@ -245,38 +280,27 @@ public class TelaCadastroPessoa extends JFrame {
 				if(chckbxPesquisador.isSelected()) {
 					PesquisadorVO pesquisador = new PesquisadorVO();
 					pesquisador.setNome(txtNome.getText() + " " + txtSobrenome.getText());
-					if(rdbtnSexoMasculino.isSelected()) {
-						pesquisador.setSexo("Masculino");
-					} else {
-						pesquisador.setSexo("Feminino");
-					}
+					pesquisador.setSexo(sexoSelecionado);
 					pesquisador.setDataNascimento(dataInicio.getDate());
 					pesquisador.setCpf(txtCpf.getText().replace(".", "").replace("-", ""));
 					pesquisador.setInstituicao(txtInstituicao.getText());
-					try {
-						PesquisadorController pesquisadorController = new PesquisadorController();
-						JOptionPane.showMessageDialog(null, pesquisadorController.CadastrarPesquisador(pesquisador));
-					} catch (Exception e) {
-						JOptionPane.showInternalMessageDialog(null, "MENSAGEM");
-					}
 					
+					PesquisadorController pesquisadorController = new PesquisadorController();
+					JOptionPane.showMessageDialog(null, pesquisadorController.cadastrarPesquisador(pesquisador));
+					
+					limparTela();
 				} else {				
 					PacienteVO paciente = new PacienteVO();
 					paciente.setNome(txtNome.getText() + " " + txtSobrenome.getText());
-					if(rdbtnSexoMasculino.isSelected()) {
-						paciente.setSexo("Masculino");
-					} else {
-						paciente.setSexo("Feminino");
-					}
+					paciente.setSexo(sexoSelecionado);
 					paciente.setDataNascimento(dataInicio.getDate());
 					paciente.setCpf(txtCpf.getText().replace(".", "").replace("-", ""));
-					if(rdbtnVoluntarioSim.isSelected()) {
-						paciente.setVoluntario(true);
-					} else {
-						paciente.setVoluntario(false);
-					}
+					paciente.setVoluntario(eVoluntario);
+					
 					PacienteController pacienteController = new PacienteController();
-					JOptionPane.showMessageDialog(null, pacienteController.CadastrarPaciente(paciente));	
+					JOptionPane.showMessageDialog(null, pacienteController.cadastrarPaciente(paciente));
+					
+					limparTela();
 				}
 			}
 		});
@@ -300,5 +324,16 @@ public class TelaCadastroPessoa extends JFrame {
 			JOptionPane.showMessageDialog(null, "Erro ao inserir cpf\nErro: " + e.getMessage());
 		}
 
+	}
+
+	protected void limparTela() {
+		txtCpf.setText("");
+		txtInstituicao.setText("");
+		txtNome.setText("");
+		txtSobrenome.setText("");
+		dataInicio.clear();
+		rdbtnGroupSexo.clearSelection();
+		rdbtnGroupVoluntario.clearSelection();
+		
 	}
 }

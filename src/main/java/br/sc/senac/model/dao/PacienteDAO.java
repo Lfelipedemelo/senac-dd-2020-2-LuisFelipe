@@ -14,16 +14,29 @@ public class PacienteDAO {
 
 	public PacienteVO inserir (PacienteVO pacienteVO) {
 
-		String sql = "INSERT INTO PACIENTE (NOME, SEXO, CPF, REACAO, VOLUNTARIO) "
-				+ "VALUES (?,?,?,?,?)";
+		String sql = "INSERT INTO PACIENTE (NOME, DATA_NASCIMENTO, SEXO, CPF, REACAO, VOLUNTARIO) "
+				+ "VALUES (?,?,?,?,?,?)";
 		
 		try (Connection conn = Banco.getConnection();
-			PreparedStatement query = Banco.getPreparedStatement(conn, sql);) {
-			query.setString(1, pacienteVO.getNome());
-			query.setString(2, pacienteVO.getSexo());
-			query.setString(3, pacienteVO.getCpf());
-			query.setInt(4, pacienteVO.getReacao());
-			query.setBoolean(5, pacienteVO.isVoluntario());
+			PreparedStatement stmt = Banco.getPreparedStatementWithGeneratedKeys(conn, sql);) {
+			
+			java.sql.Date date = java.sql.Date.valueOf(pacienteVO.getDataNascimento());
+			
+			stmt.setString(1, pacienteVO.getNome());
+			stmt.setDate(2, date);
+			stmt.setString(3, pacienteVO.getSexo());
+			stmt.setString(4, pacienteVO.getCpf());
+			stmt.setInt(5, pacienteVO.getReacao());
+			stmt.setBoolean(6, pacienteVO.isVoluntario());
+			
+			int codigoRetorno = stmt.executeUpdate();
+			if(codigoRetorno == Banco.CODIGO_RETORNO_SUCESSO) {			
+				ResultSet resultado = stmt.getGeneratedKeys();
+				if(resultado.next()) {
+					int chaveGerada = resultado.getInt(1);
+					pacienteVO.setId(chaveGerada);					
+				}
+			}
 		} catch(SQLException e) {
 			System.out.println("Erro ao inserir paciente \nCausa: " + e.getMessage());
 		}
