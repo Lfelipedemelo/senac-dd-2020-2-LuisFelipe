@@ -152,6 +152,8 @@ public class VacinaDAO implements BaseDAO<VacinaVO>{
 		
 		VacinaVO vacina = new VacinaVO();
 		vacina.setIdVacina(result.getInt("IDVACINA"));
+		vacina.setPesquisador(result.getString("PESQUISADOR"));
+		vacina.setPais(result.getString("PAIS"));
 		vacina.setEstagio(result.getInt("ESTAGIO"));
 		vacina.setDtInicioPesquisa(date);
 		
