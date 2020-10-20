@@ -25,7 +25,7 @@ public class VacinaDAO implements BaseDAO<VacinaVO>{
 			
 			stmt.setString(1, vacina.getPesquisador());
 			stmt.setString(2, vacina.getPais());
-			stmt.setInt(3, vacina.getEstagio());
+			stmt.setString(3, vacina.getEstagio());
 			stmt.setDate(4, date);
 						
 			int codigoRetorno = stmt.executeUpdate();
@@ -148,13 +148,13 @@ public class VacinaDAO implements BaseDAO<VacinaVO>{
 	@Override
 	public VacinaVO construirDoResultSet(ResultSet result) throws SQLException {
 		
-		LocalDate date = result.getDate("DT_INICIO_PESQUISA").toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		LocalDate date = result.getDate("DT_INICIO_PESQUISA").toLocalDate();
 		
 		VacinaVO vacina = new VacinaVO();
 		vacina.setIdVacina(result.getInt("IDVACINA"));
 		vacina.setPesquisador(result.getString("PESQUISADOR"));
 		vacina.setPais(result.getString("PAIS"));
-		vacina.setEstagio(result.getInt("ESTAGIO"));
+		vacina.setEstagio(result.getString("ESTAGIO"));
 		vacina.setDtInicioPesquisa(date);
 		
 		return vacina;

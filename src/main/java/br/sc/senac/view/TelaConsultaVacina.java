@@ -24,6 +24,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
 
 public class TelaConsultaVacina extends JFrame {
 
@@ -87,6 +89,7 @@ public class TelaConsultaVacina extends JFrame {
 		contentPane.add(btnConsultar, "flowx,cell 1 2,growx");
 		
 		tblVacinas = new JTable();
+		tblVacinas.setBorder(new LineBorder(new Color(0, 0, 0)));
 		tblVacinas.setModel(new DefaultTableModel(
 			new Object[][] {
 				{"#", "Pa\u00EDs", "Estagio", "Pesquisador", "Data In\u00EDcio"},

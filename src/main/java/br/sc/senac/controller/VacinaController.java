@@ -25,7 +25,7 @@ public class VacinaController {
 	}
 
 	private boolean validarEstagio(VacinaVO vacina) {
-		if(vacina.getEstagio() == 0) {
+		if(vacina.getEstagio() == "" || vacina.getEstagio().isEmpty() || vacina.getEstagio() == null) {
 			mensagem = "Estagio da vacina não selecionado!\n";
 			return false;
 		}

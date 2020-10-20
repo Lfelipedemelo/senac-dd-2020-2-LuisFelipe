@@ -17,7 +17,7 @@ public class Tela {
 		
 		VacinaVO vacina = new VacinaVO();
 		vacina.setPais("Brasil");
-		vacina.setEstagio(1);
+		vacina.setEstagio("");
 		vacina.setPesquisador("Luis");
 		vacina.setDtInicioPesquisa(LocalDate.now());
 		

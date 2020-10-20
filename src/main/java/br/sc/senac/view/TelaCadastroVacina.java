@@ -42,11 +42,11 @@ public class TelaCadastroVacina extends JFrame {
 	private JRadioButton rbtnEstagioInicial;
 	private JRadioButton rbtnEstagioTestes;
 	private JRadioButton rbtnEstagioAplicacao;
-	private int estagioSelecionado;
+	private String estagioSelecionado;
 	private ButtonGroup rbtnGroupEstagio;
-	private static final int ESTAGIO_INICIAL = 1;
-	private static final int ESTAGIO_TESTES = 2;
-	private static final int ESTAGIO_APLICACAO = 3;
+	private static final String ESTAGIO_INICIAL = "INICIAL";
+	private static final String ESTAGIO_TESTES = "TESTES";
+	private static final String ESTAGIO_APLICACAO = "APLICAÇÃO";
 	
 	
 	/**

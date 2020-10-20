@@ -6,11 +6,11 @@ public class VacinaVO {
 
 	private int idVacina;
 	private String pais;
-	private int estagio;
+	private String estagio;
 	private LocalDate dtInicioPesquisa;
 	private String pesquisador;
 	
-	public VacinaVO(int idVacina, String pais, int estagio, LocalDate dtInicioPesquisa,
+	public VacinaVO(int idVacina, String pais, String estagio, LocalDate dtInicioPesquisa,
 			String pesquisador) {
 		super();
 		this.idVacina = idVacina;
@@ -36,10 +36,10 @@ public class VacinaVO {
 	public void setPais(String pais) {
 		this.pais = pais;
 	}
-	public int getEstagio() {
+	public String getEstagio() {
 		return estagio;
 	}
-	public void setEstagio(int estagio) {
+	public void setEstagio(String estagio) {
 		this.estagio = estagio;
 	}
 	public LocalDate getDtInicioPesquisa() {
